@@ -16,16 +16,21 @@ type Props = {
  * `x` is the horizontal offset as a fraction of the card width, so cards
  * overlap like a physical deck rather than sitting in a row with gaps.
  */
-const X = [0, 0.8, 1.42, 1.94, 2.36];
-const SCALE = [1, 0.9, 0.8, 0.7, 0.62];
+const X = [0, 0.74, 1.3, 1.74, 2.1];
+const SCALE = [1, 0.88, 0.78, 0.7, 0.62];
 const ROTATE = [0, 5, 9, 13, 16];
-const OPACITY = [1, 1, 0.9, 0.75, 0];
-const BRIGHTNESS = [1, 0.82, 0.68, 0.56, 0.5];
+const OPACITY = [1, 1, 1, 0.85, 0];
+// Side cards are dimmed rather than made see-through, so overlapping cards
+// never show through each other and the active card clearly leads.
+const BRIGHTNESS = [1, 0.7, 0.52, 0.4, 0.36];
 const MAX_VISIBLE = 3;
 
-/** Phones (< 640px): neighbours sit almost off-screen, showing this much. */
+/**
+ * Phones (< 640px): neighbours sit almost off-screen. The deck's perspective
+ * pulls them ~7px back toward the centre, so 8 here shows a ~15px sliver.
+ */
 const MOBILE_QUERY = "(max-width: 639px)";
-const MOBILE_PEEK = 16;
+const MOBILE_PEEK = 8;
 
 /** Fraction of a card width that counts as a committed drag. */
 const DRAG_COMMIT = 0.18;
@@ -198,7 +203,7 @@ export function EventDeck({ events, activeIndex, onActiveChange }: Props) {
         onPointerCancel={endDrag}
         onPointerLeave={endDrag}
         onClickCapture={handleClickCapture}
-        className={`${entering ? "jc-enter-deck" : ""} relative mt-6 h-[410px] w-full sm:mt-8 touch-pan-y select-none [perspective:1600px] focus-visible:outline-none sm:h-[490px] ${
+        className={`${entering ? "jc-enter-deck" : ""} relative mt-6 h-[calc(min(100vw_-_32px,380px)_+_180px)] w-full sm:mt-8 touch-pan-y select-none [perspective:1600px] focus-visible:outline-none sm:h-[560px] lg:h-[600px] xl:h-[620px] ${
           dragging ? "cursor-grabbing" : "cursor-grab"
         }`}
       >
@@ -214,7 +219,7 @@ export function EventDeck({ events, activeIndex, onActiveChange }: Props) {
               aria-roledescription="slide"
               aria-label={`${i + 1} of ${count}: ${event.title}`}
               onClick={isActive ? undefined : () => goTo(i)}
-              className={`absolute left-1/2 top-0 h-[400px] w-[min(calc(100vw-32px),360px)] sm:h-[480px] sm:w-[320px] lg:w-[330px] ${
+              className={`absolute left-1/2 top-0 h-[calc(min(100vw_-_32px,380px)_+_170px)] w-[min(calc(100vw-32px),380px)] sm:h-[550px] sm:w-[360px] lg:h-[590px] lg:w-[400px] xl:h-[610px] xl:w-[420px] ${
                 isActive ? "" : "cursor-pointer"
               }`}
               style={{

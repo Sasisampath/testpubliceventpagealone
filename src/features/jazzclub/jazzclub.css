@@ -1,0 +1,791 @@
+/* JazzClub Events — styles for /events only. Imported by src/app/events/layout.tsx. */
+/* ------------------------------------------------------------------ */
+/* Jazzclub /events/explore entrance — runs once on mount.             */
+/* ------------------------------------------------------------------ */
+@keyframes jc-enter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes jc-enter-deck {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes jc-enter-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.jc-enter-rise {
+  animation: jc-enter-rise 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.jc-enter-deck {
+  animation: jc-enter-deck 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.jc-enter-card {
+  animation: jc-enter-fade 220ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jc-enter-rise,
+  .jc-enter-deck,
+  .jc-enter-card {
+    animation: jc-enter-fade 150ms ease-out both;
+    animation-delay: 0ms !important;
+  }
+}
+
+/* Calendar modal on /events/explore. */
+@keyframes jc-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.jc-modal-panel {
+  animation: jc-modal-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.jc-modal-backdrop {
+  animation: jc-enter-fade 220ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jc-modal-panel,
+  .jc-modal-backdrop {
+    animation: jc-enter-fade 120ms ease-out both;
+  }
+}
+
+/* ── JazzClub Event Home ─────────────────────────────────────
+   Same surface and type scale as the rest of the JazzHQ site:
+   the page background, --grid-line grid and the home-page heading
+   values, so /events reads as part of the site. */
+
+.jc-section {
+  padding-block: 72px;
+}
+
+@media (min-width: 640px) {
+  .jc-section {
+    padding-block: 96px;
+  }
+}
+
+.jc-section--light {
+  background-color: var(--background);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.jc-section--dark {
+  background-color: #08080a;
+}
+
+.jc-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vendor-tab);
+}
+
+.jc-section--dark .jc-eyebrow {
+  color: #e8574c;
+}
+
+.jc-title {
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #131315;
+}
+
+.jc-section--dark .jc-title {
+  color: #ffffff;
+}
+
+.jc-sub {
+  font-size: clamp(14px, 1.4vw, 16px);
+  line-height: 1.6;
+  color: #6b7280;
+}
+
+.jc-section--dark .jc-sub {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.jc-body {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #6b7280;
+}
+
+.jc-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #131315;
+}
+
+/* ── Event card status ──────────────────────────────────────── */
+
+.jc-status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.jc-status--upcoming {
+  color: #c2413a;
+  background-color: #fdeeed;
+}
+
+.jc-status--featured {
+  color: #4a42d6;
+  background-color: #edecfd;
+}
+
+.jc-status--past {
+  color: #6b6b73;
+  background-color: #ecebe6;
+}
+
+/* ── Figma canvas: everything below the Events section ─────────
+   One continuous surface (Figma V4): #F7F5F1 with #EEE9E2 lines on a
+   ~30px grid, 1400px content, 100px between sections. */
+
+.jc-canvas {
+  background-color: #f7f5f1;
+  background-image:
+    linear-gradient(#eee9e2 1px, transparent 1px),
+    linear-gradient(90deg, #eee9e2 1px, transparent 1px);
+  background-size: 30.3px 30.3px;
+  padding-block: 100px;
+}
+
+.jc-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+@media (max-width: 767px) {
+  .jc-canvas {
+    padding-block: 64px;
+  }
+
+  .jc-stack {
+    gap: 72px;
+  }
+}
+
+/* Figma "Heading 2": Inter Bold 40/46, -0.8px, #242424. */
+.jc-h2 {
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #242424;
+}
+
+/* Figma supporting copy: Inter Regular 16/24, #6A7077. */
+.jc-lead {
+  font-size: 16px;
+  line-height: 24px;
+  color: #6a7077;
+}
+
+/* Figma primary CTA: coral pill, 48px tall, 32px sides, Inter 14/20. */
+.jc-cta {
+  display: inline-flex;
+  height: 48px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding-inline: 32px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #ffffff;
+  background-color: #e8574c;
+  transition: background-color 0.2s ease;
+}
+
+.jc-cta:hover {
+  background-color: #d54a40;
+}
+
+.jc-cta--dark {
+  background-color: #242424;
+}
+
+.jc-cta--dark:hover {
+  background-color: #131315;
+}
+
+.jc-cta:focus-visible {
+  outline: 2px solid #131315;
+  outline-offset: 2px;
+}
+
+/* ── Sponsorship (Figma cards) ──────────────────────────────── */
+
+.jc-plan {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  padding: 30px;
+  transition: transform 0.22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .jc-plan:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jc-plan,
+  .jc-plan:hover {
+    transform: none;
+    transition: none;
+  }
+}
+
+.jc-plan--white {
+  background-color: #ffffff;
+}
+
+.jc-plan--lilac {
+  background-color: #edecff;
+}
+
+.jc-plan--dark {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  color: #ffffff;
+  background-color: #0e0e0d;
+  box-shadow:
+    0 0 1.7px rgba(0, 0, 0, 0.15),
+    0 0 0.85px rgba(0, 0, 0, 0.2);
+}
+
+.jc-plan__title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: -0.48px;
+  color: #131315;
+}
+
+.jc-plan--dark .jc-plan__title {
+  color: #ffffff;
+}
+
+.jc-plan__brand {
+  margin-top: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 19.5px;
+  letter-spacing: 1.56px;
+  text-transform: uppercase;
+  color: #5b5b63;
+}
+
+.jc-plan--dark .jc-plan__brand {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.jc-plan__media {
+  position: relative;
+  height: 200px;
+  margin-top: 30px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.jc-plan__points {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.jc-plan__points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 15px;
+  line-height: 24px;
+  color: #131315;
+}
+
+.jc-plan__points li + li {
+  padding-top: 16px;
+  border-top: 1px solid rgba(19, 19, 21, 0.1);
+}
+
+.jc-plan--dark .jc-plan__points li {
+  color: #ffffff;
+}
+
+.jc-plan--dark .jc-plan__points li + li {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+.jc-plan__points svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+/* ── Testimonials (Figma composition, stronger execution) ───── */
+
+.jc-voice {
+  --jc-accent: #564ef0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.jc-voice__stage {
+  position: relative;
+  height: 340px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+/* Figma watermark: the person's name, oversized, at 5% brand purple. */
+
+
+.jc-voice__portrait {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 58%;
+  height: 92%;
+}
+
+.jc-voice__meta {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  left: 52%;
+  transform: translateY(-40%);
+}
+
+.jc-voice__logo {
+  height: 24px;
+  width: auto;
+}
+
+.jc-voice__name {
+  margin-top: 14px;
+  font-size: clamp(20px, 1.75vw, 30px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--jc-accent);
+}
+
+.jc-voice__name span {
+  white-space: nowrap;
+}
+
+.jc-voice__role {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #131315;
+}
+
+/* Figma quote block: solid coral, white copy. */
+.jc-voice__quote {
+  position: relative;
+  flex: 1;
+  min-height: 190px;
+  padding: 46px 24px 26px;
+  background-color: #fe4c4c;
+  color: #ffffff;
+}
+
+.jc-voice__mark {
+  position: absolute;
+  top: -22px;
+  left: 20px;
+  font-size: 72px;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.jc-voice__quote blockquote {
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: -0.3px;
+}
+
+
+
+@media (max-width: 479px) {
+  .jc-voice__stage {
+    height: 300px;
+  }
+
+  .jc-voice__meta {
+    right: 16px;
+    left: 54%;
+  }
+
+  .jc-voice__name {
+    font-size: 19px;
+  }
+}
+
+/* ── Calendar 2027 (Figma quarter cards) ─────────────────────── */
+
+.jc-q {
+  overflow: hidden;
+  border: 1px solid #e6e8ea;
+  border-radius: 16px;
+  background-color: #ffffff;
+}
+
+.jc-q__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px 14px;
+  color: #ffffff;
+  background-color: var(--jc-q);
+}
+
+.jc-q__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+  letter-spacing: 1.56px;
+}
+
+.jc-q__label::before {
+  content: "";
+  width: 6px;
+  height: 18px;
+  border-radius: 3px;
+  background-color: #ffffff;
+}
+
+.jc-q__year {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16.5px;
+  letter-spacing: 1.98px;
+}
+
+.jc-q__row {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e6e8ea;
+}
+
+.jc-q__row:last-child {
+  border-bottom: 0;
+}
+
+.jc-q__month {
+  flex: 0 0 92px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 20.9px;
+  letter-spacing: 1.76px;
+  text-transform: uppercase;
+  color: #9a9aa2;
+}
+
+.jc-q__city {
+  position: relative;
+  border-radius: 999px;
+  padding: 5px 12px 5px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22.5px;
+  letter-spacing: -0.15px;
+  color: #131315;
+  background-color: var(--jc-chip);
+}
+
+.jc-q__city::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--jc-dot);
+  transform: translateY(-50%);
+}
+
+/* ── City strip (Figma 174x204 cards, auto-scrolling loop) ────── */
+
+.jc-strip {
+  overflow: hidden;
+}
+
+.jc-strip__track {
+  display: flex;
+  gap: 30px;
+  width: max-content;
+  animation: jc-strip-scroll 55s linear infinite;
+}
+
+/* One full set (9 cards + 9 gaps) — the second set lands exactly where
+   the first began, so the loop never jumps. */
+@keyframes jc-strip-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-9 * (174px + 30px)));
+  }
+}
+
+.jc-strip:hover .jc-strip__track,
+.jc-strip:focus-within .jc-strip__track,
+.jc-strip:active .jc-strip__track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jc-strip {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .jc-strip__track {
+    animation: none;
+  }
+}
+
+.jc-city {
+  position: relative;
+  flex: 0 0 174px;
+  height: 204px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.jc-city__shade {
+  position: absolute;
+  inset: 53% 0 0;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, #121212 80%);
+}
+
+.jc-city__meta {
+  position: absolute;
+  inset: 57.8% 12px 7.8% 19px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.jc-city__icon {
+  display: inline-flex;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(2.5px);
+}
+
+.jc-city__icon img {
+  width: 36px;
+  height: 36px;
+}
+
+.jc-city__name {
+  font-size: 16.7px;
+  line-height: 25px;
+  color: #ffffff;
+}
+
+/* ── Previous Co-hosts (Figma full-width white band) ────────── */
+
+.jc-logo-row {
+  overflow: hidden;
+  padding-block: 10px;
+  background-color: #ffffff;
+}
+
+.jc-logo-row__track {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  width: max-content;
+  padding-right: 50px;
+  animation: jc-logo-scroll 40s linear infinite;
+}
+
+/* The list is rendered twice; moving by half the track loops seamlessly. */
+@keyframes jc-logo-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.jc-logo-row:hover .jc-logo-row__track,
+.jc-logo-row:active .jc-logo-row__track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jc-logo-row {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .jc-logo-row__track {
+    animation: none;
+  }
+}
+
+.jc-logo-row::-webkit-scrollbar {
+  display: none;
+}
+
+.jc-logo-row__item {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  height: 55px;
+}
+
+.jc-logo-row__logo {
+  width: auto;
+  max-width: 180px;
+  height: 32px;
+  object-fit: contain;
+}
+
+@media (max-width: 1399px) {
+  .jc-logo-row__track {
+    gap: 40px;
+    padding-right: 40px;
+  }
+
+  .jc-logo-row__logo {
+    height: 26px;
+  }
+}
+
+/* ── Become a Co-Host (Figma video | form pair) ──────────────── */
+
+.jc-pair {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 35px;
+}
+
+.jc-pair__video,
+.jc-pair__form {
+  height: 720px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.jc-pair__video {
+  flex: 0 1 550px;
+  background-color: #0e0e0d;
+}
+
+.jc-pair__video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.jc-pair__form {
+  flex: 0 1 515px;
+  background-color: #ffffff;
+}
+
+.jc-pair__form .onboarding-fillout__embed,
+.jc-pair__form .onboarding-fillout__iframe {
+  height: 100%;
+  max-width: none;
+}
+
+.jc-pair__form .onboarding-fillout__iframe {
+  min-height: 0;
+  border-radius: 0;
+}
+
+@media (max-width: 1023px) {
+  .jc-pair {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .jc-pair__video,
+  .jc-pair__form {
+    flex: none;
+    width: 100%;
+    max-width: 550px;
+  }
+
+  .jc-pair__video {
+    height: auto;
+    aspect-ratio: 9 / 16;
+    max-height: 720px;
+  }
+}
+
+@media (max-width: 767px) {
+  .jc-city__icon img {
+    width: 22px;
+    height: 22px;
+  }
+}

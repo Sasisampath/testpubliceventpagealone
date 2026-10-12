@@ -40,6 +40,7 @@ export function EventCard({ event, isActive }: Props) {
   const label = CTA_LABEL[cta];
   const isAction = ctaIsAction(cta);
   const isPast = cta === "past" || cta === "recap";
+  const href = cta === "recap" ? event.recapUrl : event.url;
 
   const ctaClass = `inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold ${
     cta === "past"
@@ -106,9 +107,9 @@ export function EventCard({ event, isActive }: Props) {
         </p>
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-5">
-          {isActive && isAction && event.url ? (
+          {isActive && isAction && href ? (
             <a
-              href={event.url}
+              href={href}
               target="_blank"
               rel="noopener noreferrer"
               draggable={false}

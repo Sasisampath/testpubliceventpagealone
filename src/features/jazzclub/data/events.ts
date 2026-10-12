@@ -17,6 +17,9 @@ export type EventStatus = "upcoming" | "past";
  * - `application` → attendance by application → "Apply Now →"
  * - `unopened`    → upcoming, not yet open    → "Coming Soon"
  * - `closed`      → past event                → "View Recap →" / "Past Event"
+ *
+ * Any event whose date has passed shows "Past Event" (or "View Recap →" when
+ * `recapUrl` is set) — the registration link is never shown for past events.
  */
 export type RegistrationState = "open" | "application" | "unopened" | "closed";
 
@@ -48,75 +51,113 @@ export type JazzclubEvent = {
   registrationState: RegistrationState;
   /** Optional override. When omitted, derived from registrationState/url. */
   ctaType?: EventCtaType;
-  /** Luma / application / recap URL used by the active card's CTA. */
+  /** Luma registration URL used by the active card's CTA while upcoming. */
   url: string | null;
+  /** Optional recap link shown once the event is past. */
+  recapUrl?: string | null;
   /** Accent used by the text-only card fallback. */
   accent: string;
   /** Development-only demo record. Never included in production builds. */
   demo?: boolean;
 };
 
-/** Real JazzHQ events. */
+/**
+ * Real JazzHQ events — edit this list when details change.
+ *
+ * - `date`      ISO date; Upcoming / Past is derived from it automatically.
+ * - `thumbnail` file in /public/assets/jazzclub/events/.
+ * - `url`       the event's Luma registration page (embed URL from Luma),
+ *               or `null` until it exists → the card shows "Coming Soon".
+ * - `featured`  editorial; `featuredOrder` sorts the Featured filter.
+ */
 const REAL_EVENTS: JazzclubEvent[] = [
   {
-    id: "bengaluru-unwind",
-    city: "Bengaluru",
-    title: "JazzClub Bengaluru",
-    date: "2026-08-27",
-    description:
-      "The Bengaluru room, bringing operators and partners together over AI GTM.",
-    thumbnail: "/assets/jazzclub/events/bengaluru.webp",
+    id: "dubai-ai-in-hr-2026-10-29",
+    city: "Dubai",
+    title: "The AI in HR Roundtable: Dubai Edition",
+    date: "2026-10-29",
+    description: "Executive Roundtable & Networking Dinner. Invite-only.",
+    thumbnail: "/assets/jazzclub/events/dubai-oct-29.jpg",
     featured: false,
-    registrationState: "closed",
-    url: null,
-    accent: "#e8574c",
+    registrationState: "open",
+    url: "https://luma.com/embed/event/evt-RXDDiCjTSr1zzpx/simple",
+    accent: "#5048e5",
   },
   {
-    id: "chennai-unwind",
+    id: "chennai-ai-in-ps-2026-10-31",
     city: "Chennai",
-    title: "JazzClub Chennai",
-    date: "2026-09-17",
+    title: "AI in Professional Services",
+    date: "2026-10-31",
     description:
-      "An evening of curated AI GTM conversations with the Chennai ecosystem.",
-    thumbnail: "/assets/jazzclub/events/chennai.webp",
+      "Executive Roundtable & Networking Brunch for Professional Services Leaders. Invite-only.",
+    thumbnail: "/assets/jazzclub/events/chennai-oct-31.jpg",
+    featured: false,
+    registrationState: "open",
+    url: "https://luma.com/embed/event/evt-oTFO3WltEYL988P/simple",
+    accent: "#1f9d61",
+  },
+  {
+    id: "dubai-ai-in-hr-2026-11-17",
+    city: "Dubai",
+    title: "The AI in HR Roundtable: Dubai Edition",
+    date: "2026-11-17",
+    description: "Executive Roundtable & Networking Dinner. Invite-only.",
+    thumbnail: "/assets/jazzclub/events/dubai-nov-17.jpg",
+    featured: false,
+    registrationState: "open",
+    url: "https://luma.com/embed/event/evt-mWV4aFf108WRFyu/simple",
+    accent: "#131315",
+  },
+  {
+    id: "mumbai-ai-in-ps-2026-11-19",
+    city: "Mumbai",
+    title: "AI in Professional Services",
+    date: "2026-11-19",
+    description:
+      "Executive Roundtable & Networking Brunch for Professional Services Leaders. Invite-only.",
+    thumbnail: "/assets/jazzclub/events/mumbai-nov-19.jpg",
+    featured: true,
+    featuredOrder: 1,
+    registrationState: "open",
+    url: "https://luma.com/embed/event/evt-9RIumFEYlb5OP7t/simple",
+    accent: "#5048e5",
+  },
+  {
+    id: "qatar-ai-in-hr-2026-12-08",
+    city: "Qatar",
+    title: "The AI in HR Roundtable: Qatar Edition",
+    date: "2026-12-08",
+    description: "Executive Roundtable & Networking Dinner. Invite-only.",
+    thumbnail: "/assets/jazzclub/events/qatar-dec-8.jpg",
+    featured: false,
+    registrationState: "open",
+    url: "https://luma.com/embed/event/evt-lwWJyKIpFQcI0T0/simple",
+    accent: "#1f9d61",
+  },
+  {
+    // No Luma link supplied yet — add it to `url` and set
+    // registrationState to "open" when it exists.
+    id: "bengaluru-ai-in-ps-2026-12-10",
+    city: "Bengaluru",
+    title: "AI in Professional Services",
+    date: "2026-12-10",
+    description:
+      "Executive Roundtable & Networking Brunch for Professional Services Leaders. Invite-only.",
+    thumbnail: "/assets/jazzclub/events/bengaluru-dec-10.jpg",
     featured: false,
     registrationState: "unopened",
     url: null,
     accent: "#e8574c",
   },
-  {
-    id: "mumbai-ai-ps",
-    city: "Mumbai",
-    title: "AI in Professional Services",
-    date: "2026-10-08",
-    description: "An evening for PS leaders to learn and network.",
-    thumbnail: "/assets/jazzclub/events/mumbai.webp",
-    featured: true,
-    featuredOrder: 1,
-    registrationState: "open",
-    url: "https://luma.com/laa0heaf",
-    accent: "#1f9d61",
-  },
-  {
-    id: "hyderabad-unwind",
-    city: "Hyderabad",
-    title: "JazzClub Hyderabad",
-    date: "2026-10-29",
-    description:
-      "The Hyderabad room for founders, operators and partners building AI-native GTM.",
-    thumbnail: null,
-    featured: false,
-    registrationState: "open",
-    url: "https://luma.com/eoyer6cd",
-    accent: "#5048e5",
-  },
 ];
 
 /**
  * DEVELOPMENT-ONLY demo records proving the explorer scales to ~10 events,
- * repeated cities and every CTA state. NOT real JazzHQ events — stripped from
- * production builds and labelled "[Demo]".
+ * repeated cities and every CTA state. NOT real JazzHQ events — labelled
+ * "[Demo]" and only ever shown in development with SHOW_DEMO_EVENTS on.
  */
+const SHOW_DEMO_EVENTS = false;
+
 const DEMO_EVENTS: JazzclubEvent[] = [
   {
     id: "demo-chennai-founders",
@@ -200,7 +241,7 @@ const DEMO_EVENTS: JazzclubEvent[] = [
 ];
 
 export const jazzclubEvents: JazzclubEvent[] =
-  process.env.NODE_ENV === "development"
+  SHOW_DEMO_EVENTS && process.env.NODE_ENV === "development"
     ? [...REAL_EVENTS, ...DEMO_EVENTS]
     : REAL_EVENTS;
 
@@ -228,7 +269,7 @@ export function eventStatus(
 
 export function eventCta(event: JazzclubEvent): EventCtaType {
   if (event.ctaType) return event.ctaType;
-  if (eventStatus(event) === "past") return event.url ? "recap" : "past";
+  if (eventStatus(event) === "past") return event.recapUrl ? "recap" : "past";
   if (event.registrationState === "application" && event.url) return "apply";
   if (event.registrationState === "open" && event.url) return "tickets";
   return "coming-soon";

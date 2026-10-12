@@ -283,6 +283,15 @@ export const CTA_LABEL: Record<EventCtaType, string> = {
   past: "Past Event",
 };
 
+/** Shorter labels for the full-width CTA on phones. */
+export const CTA_LABEL_MOBILE: Record<EventCtaType, string> = {
+  tickets: "Register",
+  apply: "Apply",
+  "coming-soon": "Coming Soon",
+  recap: "View event",
+  past: "Past Event",
+};
+
 /** CTAs that navigate (and therefore show an arrow). */
 export function ctaIsAction(cta: EventCtaType) {
   return cta === "tickets" || cta === "apply" || cta === "recap";
@@ -292,6 +301,15 @@ export function formatEventDate(event: JazzclubEvent) {
   return new Date(eventTime(event)).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",
+    year: "numeric",
+  });
+}
+
+/** Compact one-line date for phones, e.g. "17 Nov 2026". */
+export function formatEventDateShort(event: JazzclubEvent) {
+  return new Date(eventTime(event)).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
     year: "numeric",
   });
 }

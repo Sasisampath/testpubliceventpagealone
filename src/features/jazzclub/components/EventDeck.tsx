@@ -23,6 +23,10 @@ const OPACITY = [1, 1, 0.9, 0.75, 0];
 const BRIGHTNESS = [1, 0.82, 0.68, 0.56, 0.5];
 const MAX_VISIBLE = 3;
 
+/** Phones (< 640px): neighbours sit almost off-screen, showing this much. */
+const MOBILE_QUERY = "(max-width: 639px)";
+const MOBILE_PEEK = 16;
+
 /** Fraction of a card width that counts as a committed drag. */
 const DRAG_COMMIT = 0.18;
 const CLICK_SUPPRESS_DISTANCE = 6;
@@ -42,10 +46,17 @@ function cardStyle(
   offset: number,
   cardWidth: number,
   dragging: boolean,
+  mobileStep: number | null,
 ): React.CSSProperties {
   const distance = Math.abs(offset);
   const sign = Math.sign(offset);
-  const x = sign * sample(X, distance) * cardWidth;
+  const spread =
+    mobileStep === null
+      ? sample(X, distance)
+      : distance <= 1
+        ? distance * mobileStep
+        : mobileStep + (distance - 1) * 0.62;
+  const x = sign * spread * cardWidth;
   const scale = sample(SCALE, distance);
   const rotate = -sign * sample(ROTATE, distance);
   const opacity = distance > MAX_VISIBLE + 0.5 ? 0 : sample(OPACITY, distance);
@@ -72,6 +83,8 @@ function cardStyle(
 export function EventDeck({ events, activeIndex, onActiveChange }: Props) {
   const stageRef = useRef<HTMLDivElement>(null);
   const [cardWidth, setCardWidth] = useState(330);
+  // Offset of the neighbouring card on phones (in card widths), else null.
+  const [mobileStep, setMobileStep] = useState<number | null>(null);
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
   const pointerId = useRef<number | null>(null);
@@ -93,7 +106,15 @@ export function EventDeck({ events, activeIndex, onActiveChange }: Props) {
     if (!stage) return;
     const measure = () => {
       const card = stage.querySelector<HTMLElement>("[data-deck-card]");
-      if (card) setCardWidth(card.offsetWidth);
+      if (!card) return;
+      const width = card.offsetWidth;
+      setCardWidth(width);
+      // Place the neighbour so only MOBILE_PEEK px of it is on screen.
+      setMobileStep(
+        window.matchMedia(MOBILE_QUERY).matches && width > 0
+          ? (stage.offsetWidth / 2 - MOBILE_PEEK + (width * SCALE[1]) / 2) / width
+          : null,
+      );
     };
     measure();
     const observer = new ResizeObserver(measure);
@@ -107,7 +128,7 @@ export function EventDeck({ events, activeIndex, onActiveChange }: Props) {
   }
 
   // Drag position in "cards", resisted at the ends of the deck.
-  const step = cardWidth * X[1];
+  const step = cardWidth * (mobileStep ?? X[1]);
   let dragCards = step > 0 ? -dragX / step : 0;
   const projected = index + dragCards;
   if (projected < 0) dragCards = -index + projected * 0.3;
@@ -177,7 +198,7 @@ export function EventDeck({ events, activeIndex, onActiveChange }: Props) {
         onPointerCancel={endDrag}
         onPointerLeave={endDrag}
         onClickCapture={handleClickCapture}
-        className={`${entering ? "jc-enter-deck" : ""} relative mt-6 h-[380px] w-full sm:mt-8 touch-pan-y select-none [perspective:1600px] focus-visible:outline-none sm:h-[490px] ${
+        className={`${entering ? "jc-enter-deck" : ""} relative mt-6 h-[410px] w-full sm:mt-8 touch-pan-y select-none [perspective:1600px] focus-visible:outline-none sm:h-[490px] ${
           dragging ? "cursor-grabbing" : "cursor-grab"
         }`}
       >
@@ -193,11 +214,11 @@ export function EventDeck({ events, activeIndex, onActiveChange }: Props) {
               aria-roledescription="slide"
               aria-label={`${i + 1} of ${count}: ${event.title}`}
               onClick={isActive ? undefined : () => goTo(i)}
-              className={`absolute left-1/2 top-0 h-[370px] w-[220px] sm:h-[480px] sm:w-[320px] lg:w-[330px] ${
+              className={`absolute left-1/2 top-0 h-[400px] w-[min(calc(100vw-32px),360px)] sm:h-[480px] sm:w-[320px] lg:w-[330px] ${
                 isActive ? "" : "cursor-pointer"
               }`}
               style={{
-                ...cardStyle(offset, cardWidth, dragging),
+                ...cardStyle(offset, cardWidth, dragging, mobileStep),
                 pointerEvents: distance > MAX_VISIBLE ? "none" : "auto",
               }}
             >

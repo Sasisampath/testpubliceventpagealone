@@ -185,7 +185,7 @@ export function EventsSection() {
           // Same height as the deck, so switching to an empty filter never
           // makes the page jump.
           <div className="page-section">
-            <div className="mx-auto flex h-[470px] max-w-[var(--max-content)] flex-col items-center justify-center gap-5 text-center sm:h-[586px]">
+            <div className="mx-auto flex h-[500px] max-w-[var(--max-content)] flex-col items-center justify-center gap-5 text-center sm:h-[586px]">
               <p className="text-xl font-semibold text-white">No events here yet.</p>
               <button
                 type="button"

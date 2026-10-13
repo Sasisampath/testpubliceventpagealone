@@ -135,8 +135,6 @@ const REAL_EVENTS: JazzclubEvent[] = [
     accent: "#1f9d61",
   },
   {
-    // No Luma link supplied yet — add it to `url` and set
-    // registrationState to "open" when it exists.
     id: "bengaluru-ai-in-ps-2026-12-10",
     city: "Bengaluru",
     title: "AI in Professional Services",
@@ -145,8 +143,8 @@ const REAL_EVENTS: JazzclubEvent[] = [
       "Executive Roundtable & Networking Brunch for Professional Services Leaders. Invite-only.",
     thumbnail: "/assets/jazzclub/events/bengaluru-dec-10.jpg",
     featured: false,
-    registrationState: "unopened",
-    url: null,
+    registrationState: "open",
+    url: "https://luma.com/event/evt-PiBUXjp1AlBlioB",
     accent: "#e8574c",
   },
 ];

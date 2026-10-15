@@ -1,5 +1,5 @@
 import "@/features/jazzclub/jazzclub.css";
-import { Footer } from "@/components/layout/footer";
+import Footer from "@/components/shared/footer";
 import { Header } from "@/components/layout/header";
 
 /**

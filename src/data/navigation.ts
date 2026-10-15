@@ -1,14 +1,33 @@
-// Link map for the shared footer.
-// `href: null` means the destination is not wired yet: the item is shown
-// but does not navigate.
+// Central link map for this frontend approval build.
+// `href: null` means the destination is not implemented in this repo yet:
+// the item is shown but does not navigate. Developers wire the real
+// destinations here after design approval.
 export const ROUTES = {
-  home: "/events",
+  home: "/",
+  vendorForm: "/for-vendors",
+  partnerForm: "/for-partners",
+  buyerForm: "/for-buyers",
 } as const;
 
 export type NavDestination = string | null;
 
+export const NAV_ITEMS: { label: string; href: NavDestination }[] = [
+  { label: "Home", href: ROUTES.home },
+  { label: "About Us", href: null },
+  { label: "Marketplace", href: null },
+];
+
+export type JourneyKey = "buyer" | "vendor" | "partner";
+
+export const JOURNEYS: { key: JourneyKey; title: string; description: string; href: NavDestination }[] = [
+  { key: "buyer", title: "I’m an AI Buyer", description: "Find AI solutions", href: null },
+  { key: "vendor", title: "I’m an AI Vendor", description: "List your product", href: null },
+  { key: "partner", title: "I’m a Channel Partner", description: "Partner with AI companies", href: null },
+];
+
 export const FOOTER_COMPANY: { label: string; href: NavDestination }[] = [
   { label: "About us", href: null },
+  { label: "Marketplace", href: null },
 ];
 
 export const FOOTER_HELP: { label: string; href: NavDestination }[] = [
@@ -20,12 +39,4 @@ export const FOOTER_HELP: { label: string; href: NavDestination }[] = [
 export const FOOTER_LEGAL: { label: string; href: NavDestination }[] = [
   { label: "Privacy Policy", href: null },
   { label: "Terms of Service", href: null },
-];
-
-// "Summarize with AI" targets; not wired yet.
-export const AI_SUMMARY_LINKS: { label: string; logo: string; href: NavDestination }[] = [
-  { label: "ChatGPT", logo: "/ai-logos/chatgpt.svg", href: null },
-  { label: "Claude", logo: "/ai-logos/claude.svg", href: null },
-  { label: "Gemini", logo: "/ai-logos/gemini.svg", href: null },
-  { label: "Grok", logo: "/ai-logos/grok.svg", href: null },
 ];

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Inter, Manrope, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import "@/styles/jazzhq-header-footer.css";
 
 const inter = Inter({
   variable: "--font-inter",
